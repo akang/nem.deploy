@@ -27,6 +27,10 @@ public class CommonConfiguration {
 	private final String networkName;
 	private final NetworkInfo networkInfo;
 
+	//for new
+	private final String bimDbUrl;
+	private final String bimDbUser;
+	private final String bimDbPass;
 	/**
 	 * Creates a new configuration object from the default properties.
 	 */
@@ -82,6 +86,11 @@ public class CommonConfiguration {
 
 		this.networkName = properties.getOptionalString("nem.network", "mainnet");
 		this.networkInfo = NetworkInfos.fromFriendlyName(this.networkName);
+
+        //for new
+        this.bimDbUrl = properties.getString("bim.dbUrl");
+        this.bimDbUser = properties.getString("bim.dbUser");
+        this.bimDbPass = properties.getString("bim.dbPass");
 	}
 
 	//region basic settings
@@ -320,4 +329,16 @@ public class CommonConfiguration {
 	}
 
 	//endregion
+
+    public String getBimDbUrl() {
+        return this.bimDbUrl;
+    }
+
+    public String getBimDbUser() {
+        return this.bimDbUser;
+    }
+
+    public String getBimDbPass() {
+        return this.bimDbPass;
+    }
 }
