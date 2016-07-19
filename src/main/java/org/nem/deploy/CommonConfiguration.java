@@ -28,6 +28,12 @@ public class CommonConfiguration {
 	private final NetworkInfo networkInfo;
 
 	//for new
+	private final String webSocketContext;
+	private final String brokerBindAddress;
+	private final String brokerConnectAddress;
+	private final String cryptoApiAddress;
+
+	private final int cryptoApiWaitSeconds;
 	private final String bimDbUrl;
 	private final String bimDbUser;
 	private final String bimDbPass;
@@ -88,6 +94,12 @@ public class CommonConfiguration {
 		this.networkInfo = NetworkInfos.fromFriendlyName(this.networkName);
 
         //for new
+		this.webSocketContext = properties.getString("nem.webSocketContext");
+		this.brokerBindAddress = properties.getString("nem.broker.bindAddress");
+		this.brokerConnectAddress = properties.getString("nem.broker.connectAddress");
+		this.cryptoApiAddress = properties.getString("nem.cryptoApi.address");
+
+		this.cryptoApiWaitSeconds = properties.getInteger("nem.cryptoApi.waitSeconds");
         this.bimDbUrl = properties.getString("bim.dbUrl");
         this.bimDbUser = properties.getString("bim.dbUser");
         this.bimDbPass = properties.getString("bim.dbPass");
@@ -330,6 +342,35 @@ public class CommonConfiguration {
 
 	//endregion
 
+	public String getWebSocketContext(){
+		return this.webSocketContext;
+	}
+	public String getBrokerBindAddress()
+	{
+		return this.brokerBindAddress;
+	}
+
+	public String getBrokerConnectAddress()
+	{
+		return this.brokerConnectAddress;
+	}
+
+	private static NetworkInfo getNetworkFromName(String name) {
+		if (name.equals("mainnet"))
+			return NetworkInfos.getMainNetworkInfo();
+		if (name.equals("testnet")) {
+			return NetworkInfos.getTestNetworkInfo();
+		}
+
+		throw new IllegalArgumentException(String.format("unknown network name %s", new Object[] { name }));
+	}
+
+	public String getCryptoApiAddress() {
+		return this.cryptoApiAddress;
+	}
+	public int getCryptoApiWaitSeconds() {
+		return this.cryptoApiWaitSeconds;
+	}
     public String getBimDbUrl() {
         return this.bimDbUrl;
     }
