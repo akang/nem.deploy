@@ -10,6 +10,7 @@ import org.nem.core.utils.*;
 import org.nem.deploy.server.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.nio.file.Paths;
@@ -45,12 +46,14 @@ public class CommonStarter {
 	private AnnotationConfigApplicationContext appCtx;
 	private NemConfigurationPolicy configurationPolicy;
 
+	public static final CommonConfiguration configuration;
+
 	private final Collection<Server> servers = new ArrayList<>();
 
 	static {
 		// initialize logging before anything is logged; otherwise not all
 		// settings will take effect
-		final CommonConfiguration configuration = new CommonConfiguration();
+		configuration = new CommonConfiguration();
 		LoggingBootstrapper.bootstrap(configuration.getNemFolder());
 
 		final File lockFile = Paths.get(
@@ -119,6 +122,14 @@ public class CommonStarter {
 			}
 		}
 		LOGGER.info(String.format("%s is ready to serve. URL is \"%s\".", CommonStarter.META_DATA.getAppName(), server.getURI()));
+
+		if(configuration.isOpenInBrowser()){
+			LOGGER.info(String.format("Opening URL  \"%s\" in default browser", CommonStarter.META_DATA.getAppName(), server.getURI()));
+			if(Desktop.isDesktopSupported())
+			{
+				Desktop.getDesktop().browse(server.getURI());
+			}
+		}
 	}
 
 	/**

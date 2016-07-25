@@ -37,6 +37,8 @@ public class CommonConfiguration {
 	private final String bimDbUrl;
 	private final String bimDbUser;
 	private final String bimDbPass;
+
+	private final boolean openInBrowser;
 	/**
 	 * Creates a new configuration object from the default properties.
 	 */
@@ -103,9 +105,21 @@ public class CommonConfiguration {
         this.bimDbUrl = properties.getString("bim.dbUrl");
         this.bimDbUser = properties.getString("bim.dbUser");
         this.bimDbPass = properties.getString("bim.dbPass");
+
+		this.openInBrowser = properties.getOptionalBoolean("nem.openInBrowser",false);
 	}
 
+
 	//region basic settings
+
+
+	/**
+	 * If true, the default browser will be opened with the url defined by nem.protocol, nem.host and nem.port when the system boots up
+	 * @return
+     */
+	public boolean isOpenInBrowser() {
+		return openInBrowser;
+	}
 
 	/**
 	 * Get the default folder for database and log files.
